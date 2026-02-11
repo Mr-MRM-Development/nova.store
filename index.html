@@ -1,1 +1,1314 @@
-ECHO is on.
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Nova Store</title>
+    <!-- Font Awesome 6 (Free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style id="theme-styles">
+        /* ===== CSS VARIABLES - DARK MODE (DEFAULT) ===== */
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0c;
+            --bg-card: #1c1c1e;
+            --bg-card-hover: #2c2c2e;
+            --bg-tab: #1c1c1e;
+            --bg-input: #1c1c1e;
+            --text-primary: #ffffff;
+            --text-secondary: #98989e;
+            --text-muted: #6c6c70;
+            --border-color: #38383a;
+            --border-hover: #48484a;
+            --accent: #0a84ff;
+            --accent-hover: #409cff;
+            --accent-game: #ff9f0a;
+            --accent-frame: #bf5af2;
+            --shadow-color: rgba(0,0,0,0.5);
+            --glass-bg: rgba(0, 0, 0, 0.8);
+            --details-bg: #0a0a0c;
+            --logo-gradient: linear-gradient(135deg, #ffffff, #a6b8ff);
+            --icon-gradient: linear-gradient(135deg, #0a84ff, #64d2ff);
+        }
+
+        /* ===== LIGHT MODE VARIABLES ===== */
+        .light-mode {
+            --bg-primary: #f5f7fa;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f0f4fc;
+            --bg-tab: #e9edf2;
+            --bg-input: #ffffff;
+            --text-primary: #1c1c1e;
+            --text-secondary: #6c6c70;
+            --text-muted: #8e8e93;
+            --border-color: #d1d5db;
+            --border-hover: #a0a4a8;
+            --accent: #0a84ff;
+            --accent-hover: #0071e3;
+            --accent-game: #ff9f0a;
+            --accent-frame: #bf5af2;
+            --shadow-color: rgba(0,0,0,0.08);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --details-bg: #f5f7fa;
+            --logo-gradient: linear-gradient(135deg, #1c1c1e, #0a84ff);
+            --icon-gradient: linear-gradient(135deg, #0a84ff, #0063ce);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, 'Inter', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.1s ease;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 40px;
+        }
+
+        /* === GLASS NAVIGATION === */
+        .nav-glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 0;
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 1.6rem;
+            letter-spacing: -0.5px;
+            background: var(--logo-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo i {
+            background: var(--icon-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.8rem;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .theme-toggle {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 70px;
+            height: 44px;
+            inset: 0;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1.2rem;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--accent);
+            transform: scale(0.95);
+        }
+
+        .search-wrapper {
+            flex: 0 1 320px;
+            position: relative;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            outline: none;
+        }
+
+        #searchInput:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.15);
+        }
+
+        #searchInput::placeholder {
+            color: var(--text-secondary);
+        }
+
+        /* === TAB NAVIGATION === */
+        .tab-container {
+            max-width: 1280px;
+            margin: 32px auto 0;
+            padding: 0 24px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            background: var(--bg-tab);
+            padding: 4px;
+            border-radius: 40px;
+            border: 1px solid var(--border-color);
+            width: fit-content;
+            margin-bottom: 32px;
+        }
+
+        .tab {
+            padding: 12px 28px;
+            border-radius: 32px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .tab[data-tab="games"].active {
+            background: var(--accent-game);
+        }
+
+        .tab[data-tab="frames"].active {
+            background: var(--accent-frame);
+        }
+
+        .tab:hover:not(.active) {
+            background: var(--bg-card-hover);
+            color: var(--text-primary);
+        }
+
+        /* === MAIN CONTAINER === */
+        .main-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* === SECTION HEADER === */
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .app-count {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            background: var(--bg-card);
+            padding: 6px 16px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* === GRID APPS === */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .app-card {
+            background: var(--bg-card);
+            border-radius: 18px;
+            padding: 20px 16px 18px;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .app-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px var(--shadow-color);
+        }
+
+        .icon-container {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: 0 8px 16px var(--shadow-color);
+        }
+
+        .app-icon {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .icon-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, var(--bg-card-hover), var(--bg-card));
+            color: var(--accent);
+            font-size: 2.2rem;
+            font-weight: 600;
+        }
+
+        .app-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .app-author {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .app-category {
+            font-size: 0.7rem;
+            padding: 4px 12px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .category-applications { 
+            background: rgba(10, 132, 255, 0.15); 
+            color: var(--accent); 
+            border: 0.5px solid var(--accent); 
+        }
+        .category-games { 
+            background: rgba(255, 159, 10, 0.15); 
+            color: var(--accent-game); 
+            border: 0.5px solid var(--accent-game); 
+        }
+        .category-frames { 
+            background: rgba(191, 90, 242, 0.15); 
+            color: var(--accent-frame); 
+            border: 0.5px solid var(--accent-frame); 
+        }
+
+        .app-date {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            background: var(--bg-card);
+            padding: 4px 12px;
+            border-radius: 30px;
+            display: inline-block;
+            border: 0.5px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        /* === PAGINATION === */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+
+        .pagination-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            background: var(--bg-card);
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* === LOADING & ERROR STATES === */
+        .loading-state, .error-state, .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+            background: var(--bg-card);
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* === DETAIL VIEW === */
+        .detail-view {
+            background: var(--bg-card);
+            border-radius: 32px;
+            padding: 32px;
+            margin-top: 16px;
+            border: 1px solid var(--border-color);
+            animation: fadeIn 0.3s ease;
+            box-shadow: 0 8px 24px var(--shadow-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .back-button {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--accent);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 28px;
+            background: rgba(10, 132, 255, 0.05);
+        }
+
+        .back-button:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .detail-header {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .detail-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 24px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: 0 12px 24px var(--shadow-color);
+        }
+
+        .detail-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .detail-info h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+        }
+
+        .detail-meta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            color: var(--text-secondary);
+        }
+
+        .detail-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-secondary);
+            padding: 6px 16px;
+            border-radius: 30px;
+            border: 0.5px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-primary);
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .screenshot-item {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .download-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .download-btn {
+            background: var(--accent);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .download-btn:hover {
+            background: var(--accent-hover);
+            transform: scale(1.02);
+        }
+
+        .details-box {
+            background: var(--details-bg);
+            padding: 24px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            line-height: 1.7;
+            white-space: pre-wrap;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .nav-right {
+                justify-content: space-between;
+            }
+            
+            .search-wrapper {
+                width: 100%;
+            }
+            
+            .tabs {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .tab {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .apps-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 16px;
+            }
+            
+            .detail-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .detail-info h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- GLASS NAVIGATION -->
+    <div class="nav-glass">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-cloud"></i>
+                <span>NOVA STORE</span>
+            </div>
+            
+            <div class="nav-right">
+                <!-- TOGGLE DARK/LIGHT MODE -->
+                <div class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </div>
+                
+                <div class="search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Cari aplikasi, game, frame..." autocomplete="off">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB NAVIGATION -->
+    <div class="tab-container">
+        <div class="tabs">
+            <div class="tab active" data-tab="applications">
+                <i class="fas fa-cube"></i> Applications
+            </div>
+            <div class="tab" data-tab="games">
+                <i class="fas fa-gamepad"></i> Games
+            </div>
+            <div class="tab" data-tab="frames">
+                <i class="fas fa-frame"></i> Frames
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-container" id="mainContent">
+        <!-- CONTENT AKAN DIISI JAVASCRIPT -->
+    </div>
+
+    <script>
+        // ============================================
+        // NOVA STORE - DARK/LIGHT MODE TOGGLE
+        // Dengan 3 Kategori & Pagination 20 per Halaman
+        // ============================================
+
+        // === KONFIGURASI GITHUB ===
+        const REPO_OWNER = 'Mr-MRM-Development';
+        const REPO_NAME = 'nova.store';
+        const BASE_PATH = 'server';
+        const BRANCH = 'main'; // Sesuaikan dengan branch default
+        
+        // === KATEGORI ===
+        const CATEGORIES = ['applications', 'games', 'frames'];
+        
+        // === STATE GLOBAL ===
+        let allAppsByCategory = {
+            applications: [],
+            games: [],
+            frames: []
+        };
+        
+        let currentCategory = 'applications';
+        let currentPage = 1;
+        let itemsPerPage = 20;
+        let searchTerm = '';
+
+        // ============================================
+        // 1. THEME TOGGLE (DARK/LIGHT MODE)
+        // ============================================
+        function initTheme() {
+            // Cek preferensi tersimpan
+            const savedTheme = localStorage.getItem('novaStoreTheme');
+            
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                document.querySelector('#themeToggle i').className = 'fas fa-sun';
+            } else {
+                // Default dark mode
+                document.body.classList.remove('light-mode');
+                document.querySelector('#themeToggle i').className = 'fas fa-moon';
+            }
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.querySelector('#themeToggle i');
+            
+            if (body.classList.contains('light-mode')) {
+                // Switch ke dark mode
+                body.classList.remove('light-mode');
+                themeIcon.className = 'fas fa-moon';
+                localStorage.setItem('novaStoreTheme', 'dark');
+            } else {
+                // Switch ke light mode
+                body.classList.add('light-mode');
+                themeIcon.className = 'fas fa-sun';
+                localStorage.setItem('novaStoreTheme', 'light');
+            }
+        }
+
+        // ============================================
+        // 2. FUNGSI GET DAFTAR FOLDER PER KATEGORI
+        // ============================================
+        async function getCategoryFolders(category) {
+            try {
+                const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${BASE_PATH}/${category}?ref=${BRANCH}`;
+                console.log(`Fetching ${category}:`, url);
+                
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        console.warn(`Folder ${BASE_PATH}/${category}/ tidak ditemukan`);
+                        return [];
+                    }
+                    throw new Error(`Gagal load ${category}: ${response.status}`);
+                }
+                
+                const contents = await response.json();
+                
+                // Filter hanya folder (type = dir)
+                const appFolders = contents.filter(item => item.type === 'dir');
+                
+                return appFolders;
+                
+            } catch (error) {
+                console.error(`Error fetching ${category}:`, error);
+                return [];
+            }
+        }
+
+        // ============================================
+        // 3. FUNGSI BACA SATU FOLDER APLIKASI
+        // ============================================
+        async function readAppFolder(folderData, category) {
+            try {
+                const folderName = folderData.name;
+                const folderUrl = folderData.url;
+                
+                // Get contents of this app folder
+                const response = await fetch(folderUrl);
+                const contents = await response.json();
+                
+                // Inisialisasi data aplikasi
+                const appData = {
+                    folderName: folderName,
+                    category: category,
+                    package: null,
+                    iconUrl: null,
+                    screenshots: [],
+                    downloads: [],
+                    details: null
+                };
+
+                // 1. Cari package.json (WAJIB)
+                const packageFile = contents.find(f => f.name === 'package.json');
+                if (packageFile) {
+                    try {
+                        const pkgResponse = await fetch(packageFile.download_url);
+                        appData.package = await pkgResponse.json();
+                    } catch (e) {
+                        console.warn(`Gagal baca package.json di ${folderName}:`, e);
+                    }
+                }
+
+                // 2. Cari icon.png
+                const iconFile = contents.find(f => f.name === 'icon.png');
+                if (iconFile) {
+                    appData.iconUrl = iconFile.download_url;
+                }
+
+                // 3. Cari details.txt
+                const detailsFile = contents.find(f => f.name === 'details.txt');
+                if (detailsFile) {
+                    try {
+                        const detailsResponse = await fetch(detailsFile.download_url);
+                        appData.details = await detailsResponse.text();
+                    } catch (e) {
+                        console.warn(`Gagal baca details.txt di ${folderName}:`, e);
+                    }
+                }
+
+                // 4. Cari folder screenshots/
+                const screenshotsFolder = contents.find(f => f.name === 'screenshots' && f.type === 'dir');
+                if (screenshotsFolder) {
+                    try {
+                        const ssResponse = await fetch(screenshotsFolder.url);
+                        const ssContents = await ssResponse.json();
+                        appData.screenshots = ssContents
+                            .filter(f => f.type === 'file' && /\.(png|jpg|jpeg|gif|webp)$/i.test(f.name))
+                            .map(f => f.download_url);
+                    } catch (e) {
+                        console.warn(`Gagal baca screenshots di ${folderName}:`, e);
+                    }
+                }
+
+                // 5. Cari folder downloads/
+                const downloadsFolder = contents.find(f => f.name === 'downloads' && f.type === 'dir');
+                if (downloadsFolder) {
+                    try {
+                        const dlResponse = await fetch(downloadsFolder.url);
+                        const dlContents = await dlResponse.json();
+                        appData.downloads = dlContents
+                            .filter(f => f.type === 'file')
+                            .map(f => ({
+                                name: f.name,
+                                url: f.download_url,
+                                size: f.size ? formatBytes(f.size) : 'unknown'
+                            }));
+                    } catch (e) {
+                        console.warn(`Gagal baca downloads di ${folderName}:`, e);
+                    }
+                }
+
+                return appData;
+
+            } catch (error) {
+                console.error(`Error reading folder ${folderData.name}:`, error);
+                return null;
+            }
+        }
+
+        // ============================================
+        // 4. FUNGSI LOAD SEMUA KATEGORI
+        // ============================================
+        async function loadAllCategories() {
+            const mainContent = document.getElementById('mainContent');
+            
+            mainContent.innerHTML = `
+                <div class="loading-state">
+                    <i class="fas fa-cloud-download-alt fa-3x"></i>
+                    <h3>Memuat Nova Store...</h3>
+                    <p style="margin-top: 12px; color: var(--text-secondary);">Membaca folder server/ dari GitHub</p>
+                    <div style="margin-top: 20px;">
+                        <i class="fas fa-spinner fa-pulse"></i>
+                    </div>
+                </div>
+            `;
+
+            try {
+                // Load semua kategori secara paralel
+                for (const category of CATEGORIES) {
+                    // Step 1: Dapatkan semua folder per kategori
+                    const appFolders = await getCategoryFolders(category);
+                    
+                    // Step 2: Baca setiap folder
+                    const appsPromises = appFolders.map(folder => readAppFolder(folder, category));
+                    const appsResults = await Promise.all(appsPromises);
+                    
+                    // Filter yang berhasil di-load dan memiliki package.json
+                    allAppsByCategory[category] = appsResults.filter(app => app !== null && app.package !== null);
+                    
+                    console.log(`Loaded ${allAppsByCategory[category].length} apps from ${category}`);
+                }
+                
+                // Reset ke halaman pertama
+                currentPage = 1;
+                
+                // Tampilkan kategori aktif
+                renderCurrentView();
+                
+            } catch (error) {
+                console.error('Error loading categories:', error);
+                mainContent.innerHTML = `
+                    <div class="error-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Error Memuat Data</h3>
+                        <p style="color: #ff9f0a; margin: 12px 0;">${error.message}</p>
+                        <button onclick="location.reload()" style="margin-top: 28px; background: var(--accent); color: white; border: none; padding: 12px 32px; border-radius: 30px; font-weight: 600; cursor: pointer;">
+                            <i class="fas fa-redo"></i> Coba Lagi
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        // ============================================
+        // 5. RENDER CURRENT VIEW (dengan Pagination)
+        // ============================================
+        function renderCurrentView() {
+            const mainContent = document.getElementById('mainContent');
+            
+            // Ambil data kategori yang aktif
+            let allItems = allAppsByCategory[currentCategory] || [];
+            
+            // Filter berdasarkan pencarian
+            const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+            
+            let displayItems = searchTerm 
+                ? allItems.filter(app => 
+                    app.package?.name?.toLowerCase().includes(searchTerm) ||
+                    app.package?.author?.toLowerCase().includes(searchTerm))
+                : [...allItems];
+            
+            // Simpan total items setelah filter
+            const totalItems = displayItems.length;
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            
+            // Validasi current page
+            if (currentPage > totalPages && totalPages > 0) {
+                currentPage = totalPages;
+            }
+            if (currentPage < 1) currentPage = 1;
+            
+            // Potong data untuk halaman saat ini
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedItems = displayItems.slice(startIndex, endIndex);
+            
+            // Buat header dengan info kategori
+            const categoryIcons = {
+                applications: 'fa-cube',
+                games: 'fa-gamepad',
+                frames: 'fa-frame'
+            };
+            
+            const categoryNames = {
+                applications: 'Applications',
+                games: 'Games',
+                frames: 'Frames'
+            };
+            
+            let gridHTML = `
+                <div class="section-header">
+                    <h2>
+                        <i class="fas ${categoryIcons[currentCategory]}" style="color: ${getCategoryColor(currentCategory)}"></i>
+                        ${categoryNames[currentCategory]}
+                    </h2>
+                    <span class="app-count">
+                        ${totalItems} item • Halaman ${totalPages > 0 ? currentPage : 0}/${totalPages}
+                    </span>
+                </div>
+            `;
+            
+            if (paginatedItems.length === 0) {
+                gridHTML += `
+                    <div class="empty-state">
+                        <i class="fas fa-folder-open"></i>
+                        <h3>Tidak Ada Item</h3>
+                        <p style="color: var(--text-secondary); margin-top: 8px;">
+                            ${searchTerm 
+                                ? `Tidak ditemukan dengan kata kunci "${searchTerm}"` 
+                                : `Belum ada ${categoryNames[currentCategory]} di folder server/${currentCategory}/`}
+                        </p>
+                        ${searchTerm ? `
+                            <button onclick="document.getElementById('searchInput').value=''; renderCurrentView();" style="margin-top: 20px; background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 8px 20px; border-radius: 30px; cursor: pointer;">
+                                <i class="fas fa-times"></i> Reset Pencarian
+                            </button>
+                        ` : ''}
+                    </div>
+                `;
+            } else {
+                gridHTML += `<div class="apps-grid">`;
+                
+                paginatedItems.forEach(app => {
+                    const appName = app.package?.name || app.folderName;
+                    const appAuthor = app.package?.author || 'Unknown';
+                    const appDate = app.package?.createdAt || '';
+                    const formattedDate = appDate ? formatDate(appDate) : 'Tidak ada tanggal';
+                    
+                    gridHTML += `
+                        <div class="app-card" onclick="showDetail('${app.folderName}', '${app.category}')">
+                            <div class="icon-container">
+                                ${app.iconUrl 
+                                    ? `<img src="${app.iconUrl}" class="app-icon" alt="${appName} icon" loading="lazy">`
+                                    : `<div class="icon-placeholder">${appName.charAt(0).toUpperCase()}</div>`
+                                }
+                            </div>
+                            <div class="app-name">${escapeHtml(appName)}</div>
+                            <div class="app-author">${escapeHtml(appAuthor)}</div>
+                            <span class="app-category category-${app.category}">
+                                <i class="fas ${categoryIcons[app.category]}"></i> ${categoryNames[app.category]}
+                            </span>
+                            <span class="app-date"><i class="far fa-calendar-alt"></i> ${formattedDate}</span>
+                        </div>
+                    `;
+                });
+                
+                gridHTML += `</div>`;
+                
+                // Tambahkan pagination jika lebih dari 1 halaman
+                if (totalPages > 1) {
+                    gridHTML += `
+                        <div class="pagination-container">
+                            <button class="pagination-btn" onclick="changePage('prev')" ${currentPage <= 1 ? 'disabled' : ''}>
+                                <i class="fas fa-chevron-left"></i> Sebelumnya
+                            </button>
+                            <span class="page-info">
+                                Halaman ${currentPage} dari ${totalPages}
+                            </span>
+                            <button class="pagination-btn" onclick="changePage('next')" ${currentPage >= totalPages ? 'disabled' : ''}>
+                                Selanjutnya <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+            
+            mainContent.innerHTML = gridHTML;
+        }
+
+        // ============================================
+        // 6. SHOW DETAIL APLIKASI
+        // ============================================
+        window.showDetail = async function(folderName, category) {
+            const mainContent = document.getElementById('mainContent');
+            
+            mainContent.innerHTML = `
+                <div class="loading-state">
+                    <i class="fas fa-spinner fa-pulse"></i>
+                    <h3>Memuat detail...</h3>
+                </div>
+            `;
+            
+            // Cari app di cache
+            let app = allAppsByCategory[category]?.find(a => a.folderName === folderName);
+            
+            // Kalau belum lengkap, refresh dari GitHub
+            if (!app || !app.details) {
+                try {
+                    const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${BASE_PATH}/${category}/${folderName}?ref=${BRANCH}`;
+                    const response = await fetch(url);
+                    const folderData = { name: folderName, url: response.url };
+                    app = await readAppFolder(folderData, category);
+                    
+                    // Update cache
+                    if (app) {
+                        const index = allAppsByCategory[category].findIndex(a => a.folderName === folderName);
+                        if (index !== -1) {
+                            allAppsByCategory[category][index] = app;
+                        } else {
+                            allAppsByCategory[category].push(app);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error refreshing app detail:', error);
+                }
+            }
+            
+            if (!app) {
+                mainContent.innerHTML = `
+                    <div class="error-state">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h3>Gagal memuat detail</h3>
+                        <button onclick="renderCurrentView()" class="back-button" style="margin-top: 20px;">
+                            <i class="fas fa-arrow-left"></i> Kembali
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Build detail HTML
+            const appName = app.package?.name || app.folderName;
+            const appAuthor = app.package?.author || 'Unknown';
+            const appDate = app.package?.createdAt ? formatDate(app.package.createdAt) : 'Tidak ada tanggal';
+            
+            const categoryIcons = {
+                applications: 'fa-cube',
+                games: 'fa-gamepad',
+                frames: 'fa-frame'
+            };
+            
+            const categoryNames = {
+                applications: 'Applications',
+                games: 'Games',
+                frames: 'Frames'
+            };
+            
+            // Screenshots
+            let screenshotsHTML = '';
+            if (app.screenshots && app.screenshots.length > 0) {
+                app.screenshots.forEach(url => {
+                    screenshotsHTML += `
+                        <div class="screenshot-item">
+                            <img src="${url}" alt="screenshot" loading="lazy">
+                        </div>
+                    `;
+                });
+            } else {
+                screenshotsHTML = `
+                    <div class="screenshot-item" style="grid-column: 1/-1; padding: 32px; color: var(--text-secondary);">
+                        <i class="fas fa-image"></i> Tidak ada screenshot
+                    </div>
+                `;
+            }
+            
+            // Downloads
+            let downloadsHTML = '';
+            if (app.downloads && app.downloads.length > 0) {
+                app.downloads.forEach(file => {
+                    downloadsHTML += `
+                        <a href="${file.url}" class="download-btn" download>
+                            <i class="fas fa-download"></i> ${file.name} (${file.size})
+                        </a>
+                    `;
+                });
+            } else {
+                downloadsHTML = `
+                    <div style="color: var(--text-secondary); padding: 16px; background: var(--details-bg); border-radius: 16px;">
+                        <i class="fas fa-folder-open"></i> Folder downloads/ kosong
+                    </div>
+                `;
+            }
+            
+            // Details text
+            const detailsText = app.details || 'Tidak ada deskripsi. Buat file details.txt di folder aplikasi.';
+            
+            const detailHTML = `
+                <div class="detail-view">
+                    <button class="back-button" onclick="renderCurrentView()">
+                        <i class="fas fa-arrow-left"></i> Kembali ke ${categoryNames[app.category]}
+                    </button>
+                    
+                    <div class="detail-header">
+                        <div class="detail-icon">
+                            ${app.iconUrl 
+                                ? `<img src="${app.iconUrl}" alt="${appName} icon">`
+                                : `<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background: var(--bg-secondary); color:${getCategoryColor(app.category)}; font-size:2.5rem;">
+                                    ${appName.charAt(0).toUpperCase()}
+                                   </div>`
+                            }
+                        </div>
+                        <div class="detail-info">
+                            <h1>${escapeHtml(appName)}</h1>
+                            <div class="detail-meta">
+                                <span><i class="fas fa-user"></i> ${escapeHtml(appAuthor)}</span>
+                                <span><i class="fas fa-calendar"></i> ${appDate}</span>
+                                <span><i class="fas ${categoryIcons[app.category]}" style="color:${getCategoryColor(app.category)}"></i> ${categoryNames[app.category]}</span>
+                                <span><i class="fas fa-folder"></i> ${app.folderName}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="section-title">
+                            <i class="fas fa-mobile-alt"></i> Screenshots
+                        </div>
+                        <div class="screenshot-grid">
+                            ${screenshotsHTML}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="section-title">
+                            <i class="fas fa-download"></i> Download
+                        </div>
+                        <div class="download-list">
+                            ${downloadsHTML}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="section-title">
+                            <i class="fas fa-info-circle"></i> Deskripsi
+                        </div>
+                        <div class="details-box">
+                            ${escapeHtml(detailsText).replace(/\n/g, '<br>')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            mainContent.innerHTML = detailHTML;
+        };
+
+        // ============================================
+        // 7. UTILITY FUNCTIONS
+        // ============================================
+        function formatDate(dateStr) {
+            try {
+                const options = { year: 'numeric', month: 'short', day: 'numeric' };
+                return new Date(dateStr).toLocaleDateString('id-ID', options);
+            } catch {
+                return dateStr;
+            }
+        }
+
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function getCategoryColor(category) {
+            switch(category) {
+                case 'applications': return '#0a84ff';
+                case 'games': return '#ff9f0a';
+                case 'frames': return '#bf5af2';
+                default: return '#0a84ff';
+            }
+        }
+
+        // ============================================
+        // 8. PAGINATION & NAVIGATION
+        // ============================================
+        window.changePage = function(direction) {
+            const totalItems = allAppsByCategory[currentCategory]?.length || 0;
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            
+            if (direction === 'next' && currentPage < totalPages) {
+                currentPage++;
+                renderCurrentView();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (direction === 'prev' && currentPage > 1) {
+                currentPage--;
+                renderCurrentView();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        };
+
+        window.changeCategory = function(category) {
+            currentCategory = category;
+            currentPage = 1;
+            
+            // Update active tab
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.tab[data-tab="${category}"]`).classList.add('active');
+            
+            renderCurrentView();
+        };
+
+        // ============================================
+        // 9. INITIALIZATION & EVENT LISTENERS
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Init theme
+            initTheme();
+            
+            // Theme toggle listener
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            
+            // Load semua data
+            loadAllCategories();
+            
+            // Tab click listeners
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const category = tab.dataset.tab;
+                    changeCategory(category);
+                });
+            });
+            
+            // Search real-time dengan debounce
+            let searchTimeout;
+            const searchInput = document.getElementById('searchInput');
+            
+            searchInput.addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    currentPage = 1;
+                    renderCurrentView();
+                }, 300);
+            });
+            
+            // Handle enter key on search
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    currentPage = 1;
+                    renderCurrentView();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
