@@ -1,0 +1,2 @@
+Ini sample frame untuk membuat applikasi OMERIZ dengan hanya meng edit saja, 
+yang merupakan sample bawaan dari OMERIZ v2 (OMERIZ 2.0.0)
