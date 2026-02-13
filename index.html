@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Nova Store</title>
+    <link rel="shortcut icon" href="icon.png" type="image/x-icon">
     <!-- Font Awesome 6 (Free) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style id="theme-styles">
         /* ===== CSS VARIABLES - DARK MODE (DEFAULT) ===== */
-	* {user-select: none;}
+	    * {
+            user-select: none;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
         :root {
             --bg-primary: #000000;
             --bg-secondary: #0a0a0c;
@@ -70,6 +74,10 @@
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
             padding-bottom: 40px;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
         }
 
         /* === GLASS NAVIGATION === */
@@ -630,11 +638,146 @@
                 font-size: 1.8rem;
             }
         }
+
+        .title-bar {
+            background: var(--bg-tab);
+            padding: 6px 12px;
+            -webkit-app-region: drag;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            border-bottom: solid 1px var(--border-color);
+            margin-bottom: 12px;
+        }
+
+        .title-bar .title-text {
+            text-align: left;
+            margin: 0 12px;
+            font-size: 10pt;
+        }
+
+        .title-bar .circle {
+            -webkit-app-region: none;
+            cursor: pointer;
+            background: #adadad40;
+            color: var(--text-primary);
+            font-weight: 600;
+            border-radius: 50%;
+            border: none;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: 0.25s ease;
+        }
+
+
+        /* ===== CRYSTAL BASE GLOW ===== */
+        .title-bar .circle::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: crystalGlow 0.5s ease-in-out infinite;
+        }
+
+        /* ===== SPARKLE SWEEP ===== */
+        .title-bar .circle::after {
+            content: "";
+            position: absolute;
+            width: 40%;
+            height: 140%;
+            top: -20%;
+            left: -60%;
+            transform: rotate(25deg);
+            background: linear-gradient(
+                to right,
+                transparent,
+                rgba(255,255,255,0.7),
+                transparent
+            );
+            animation: crystalSweep 1s linear infinite;
+        }
+
+
+        /* ===== COLORS ===== */
+        .circle.red::before {
+            box-shadow: 0 0 6px #ff5555;
+        }
+
+        .circle.blue::before {
+            box-shadow: 0 0 6px #5555ff;
+        }
+
+
+        /* ===== HOVER ===== */
+        .title-bar .circle:hover {
+            transform: scale(1.25);
+        }
+
+        .circle.red:hover {
+            background: #ff5555;
+            box-shadow: 0 0 12px #ff5555;
+        }
+
+        .circle.blue:hover {
+            background: #5555ff;
+            box-shadow: 0 0 12px #5555ff;
+        }
+
+
+        /* ===== CLICK ===== */
+        .title-bar .circle:active {
+            transform: scale(0.9);
+        }
+
+
+        /* ===== ANIMATIONS ===== */
+
+        @keyframes crystalGlow {
+            0%,100% {
+                opacity: 0.4;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.9;
+                transform: scale(1.08);
+            }
+        }
+
+        @keyframes crystalSweep {
+            0% {
+                left: -70%;
+                opacity: 0;
+            }
+            30% {
+                opacity: 1;
+            }
+            60% {
+                opacity: 0.8;
+            }
+            100% {
+                left: 130%;
+                opacity: 0;
+            }
+        }
+
+        .nav-glass {
+            padding-top: 0;
+        }
+
     </style>
 </head>
 <body>
     <!-- GLASS NAVIGATION -->
     <div class="nav-glass">
+        <div class="title-bar">
+            <button class="circle red" onclick="window.close()">⨉</button>
+            <button class="circle blue">?</button>
+            <div class="title-text">Nova Store</div>
+        </div>
         <div class="nav-container">
             <div class="logo">
                 <i class="fas fa-cloud"></i>
@@ -683,7 +826,7 @@
 
         // === KONFIGURASI GITHUB ===
         const REPO_OWNER = 'Mr-MRM-Development';
-        const REPO_NAME = 'nova.store';
+        const REPO_NAME = 'nova.server';
         const BASE_PATH = 'server';
         const BRANCH = 'main'; // Sesuaikan dengan branch default
         
